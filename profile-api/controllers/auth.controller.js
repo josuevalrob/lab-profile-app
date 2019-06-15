@@ -36,13 +36,31 @@ module.exports.authenticate = (req, res, next) => {
 }
 
 module.exports.logout = (req, res, next) => {
-  throw createError(501, 'Not Implemented')
+  req.logout(); //ya viene con passport
+  res.status(204).json();//hay que darle un numero, 204 es ok
 }
 
 module.exports.getProfile = (req, res, next) => {
-  throw createError(501, 'Not Implemented')
+  User.findById(req.params.id)
+  .then((user)=>{
+    if (!user) {
+        throw createError(404, 'User not found')
+      } else {
+        res.json(user)
+      }
+  })
+  .catch(next)
 }
 
 module.exports.editProfile = (req, res, next) => {
-  throw createError(501, 'Not Implemented')
+  User.findByIdAndUpdate(req.params.id, req.body, {new:true, runValidators:true})
+  .then(user =>{
+    if(!user){
+      throw createError(404, 'User not found')
+    }else{
+      res.json(user)
+    }
+  }
+  )
+  .catch(next)
 }

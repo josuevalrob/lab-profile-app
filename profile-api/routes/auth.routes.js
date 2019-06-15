@@ -7,4 +7,10 @@ router.post('/register', auth.register);
 
 router.post('/login', auth.authenticate);
 
+router.get('/getProfile/:id', auth.getProfile);
+
+router.put('/editProfile/:id', auth.editProfile);
+
+router.get('/logout', auth.logout);
+
 module.exports = router;
